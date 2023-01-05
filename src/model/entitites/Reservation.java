@@ -45,22 +45,24 @@ public class Reservation {
 
 	}
 
-	public void update(Date checkIn, Date checkOut) {
+	public String update(Date checkIn, Date checkOut) {
+		Date now = new Date();
+		if (checkIn.before(now) | checkOut.before(now)) {
+			return "\nReservations dates for update must be future dates";
+
+		}
+		if (!checkOut.after(checkIn)) {
+			return "\nCheck Out date must be after Check In date";
+		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		return null;
 	}
 
 	@Override
 	public String toString() {
-		return "Room Number: "
-				+ roomNumber 
-				+ ", Check In: "
-				+ sdf.format(checkIn) 
-				+ ", Check Out: "
-				+ sdf.format(checkOut)
-				+", "
-				+duration()
-				+" nights";
+		return "Room Number: " + roomNumber + ", Check In: " + sdf.format(checkIn) + ", Check Out: "
+				+ sdf.format(checkOut) + ", " + duration() + " nights";
 
 	}
 
